@@ -42,8 +42,8 @@ export const Navbar = () => {
           <NavItem to="/analysis">Analysis</NavItem>
           <NavItem to="/weather">Weather</NavItem>
           <NavItem to="/structure">Structure</NavItem>
-          <NavItem to="/about">About us</NavItem>
           <NavItem to="/faqs">FAQs</NavItem>
+          <NavItem to="/about">About us</NavItem>
           <div className="mx-2 h-6 w-px bg-blue-200 dark:bg-white/10" />
           
           {/* User info and auth buttons */}
