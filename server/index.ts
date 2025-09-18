@@ -27,6 +27,7 @@ import express from "express";
 import cors from "cors";
 import axios from "axios";
 import { handleDemo } from "./routes/demo";
+import { handleLogin } from "./routes/auth";
 
 export function createServer() {
   const app = express();
@@ -43,6 +44,9 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+  
+  // Authentication routes
+  app.post("/api/login", handleLogin);
 
   // 🌦️ New Weather API route
   app.get("/api/weather", async (req, res) => {

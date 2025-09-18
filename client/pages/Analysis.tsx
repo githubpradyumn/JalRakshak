@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Droplets, Gauge, MapPin, Users, Ruler, Bell } from "lucide-react";
+import { Droplets, Gauge, MapPin, Users, Ruler, Bell, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -23,6 +24,7 @@ const glass =
   "rounded-2xl border border-black bg-white/20 shadow-xl ring-1 ring-black/20 backdrop-blur-md dark:border-white/10 dark:bg-white/10 dark:ring-white/10";
 
 export default function Analysis() {
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState<Inputs>({
     name: "Resident",
     location: "New Delhi, IN",
@@ -198,7 +200,14 @@ export default function Analysis() {
               <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-black dark:text-blue-100">
                 <Ruler className="h-4 w-4" /> Suggested recharge structure
               </h3>
-              <p className="text-black/90 dark:text-blue-100/90">{structure}</p>
+              <p className="text-black/90 dark:text-blue-100/90 mb-4">{structure}</p>
+              <Button 
+                onClick={() => navigate('/structure')}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Building2 className="h-4 w-4 mr-2" />
+                View Structure Details
+              </Button>
             </div>
             <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
               <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Dimensions & cost estimate</h3>

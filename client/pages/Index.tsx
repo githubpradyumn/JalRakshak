@@ -41,8 +41,6 @@ export default function Index() {
                   <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
                 </a>
               </Button>
-            </div>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild className="group bg-blue-600 text-white hover:bg-blue-700">
                 <a href="#get-started">
                   Get Started
