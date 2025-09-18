@@ -1,8 +1,19 @@
 import { RainBackground } from "@/components/RainBackground";
-import { ArrowRight, Droplets, CloudRain, Gauge, Users, Hammer } from "lucide-react";
+import { ArrowRight, Droplets, CloudRain, Gauge, Users, Hammer, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 
 export default function Index() {
+  const getStartedRef = useRef<HTMLDivElement>(null);
+  const learnMoreRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'center'
+    });
+  };
+
   return (
     <main className="relative overflow-hidden">
       <section className="relative isolate">
@@ -41,24 +52,25 @@ export default function Index() {
                   <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
                 </a>
               </Button>
-              <Button asChild className="group bg-blue-600 text-white hover:bg-blue-700">
-                <a href="#get-started">
-                  Get Started
-                  <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
-                </a>
+              <Button 
+                onClick={() => scrollToSection(getStartedRef)}
+                className="group bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Get Started
+                <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
               </Button>
-              <a
-                href="#features"
-                className="rounded-md px-4 py-2 text-sm font-semibold text-blue-800 underline-offset-4 hover:underline dark:text-blue-200"
+              <button
+                onClick={() => scrollToSection(learnMoreRef)}
+                className="rounded-md px-4 py-2 text-sm font-semibold text-blue-800 underline-offset-4 hover:underline dark:text-blue-200 transition-colors"
               >
                 Learn more
-              </a>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="features" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24">
+      <section ref={learnMoreRef} id="features" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24">
         <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">Why JalRakshak</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {[
@@ -84,13 +96,14 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="get-started" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24 mt-10">
+      <section ref={getStartedRef} id="get-started" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24 mt-10">
         <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">Get Started</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {[
             { id: "analysis", title: "Analysis", href: "/analysis", desc: "Explore feasibility analysis for your location.", icon: Gauge },
             { id: "weather", title: "Weather", href: "/weather", desc: "View current and upcoming rainfall insights.", icon: CloudRain },
-            { id: "structure", title: "Structure", href: "/structure", desc: "Get details for your harvesting structure.", icon: Gauge },
+            { id: "structure", title: "Structure", href: "/structure", desc: "Get details for your harvesting structure.", icon: Hammer },
+            { id: "faqs", title: "FAQs", href: "/faqs", desc: "Find answers to common questions about JalRakshak.", icon: HelpCircle },
           ].map((f) => (
             <a
               key={f.id}

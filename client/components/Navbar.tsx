@@ -23,6 +23,10 @@ export const Navbar = () => {
     navigate("/login");
   };
 
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark");
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-blue-100/60 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 dark:border-white/10 dark:bg-[#0b1220]/60">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -45,6 +49,25 @@ export const Navbar = () => {
           <NavItem to="/faqs">FAQs</NavItem>
           <NavItem to="/about">About us</NavItem>
           <div className="mx-2 h-6 w-px bg-blue-200 dark:bg-white/10" />
+          
+          {/* Theme toggle button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleTheme}
+            className="text-blue-700 hover:text-blue-900 hover:bg-blue-100/50 dark:text-blue-300 dark:hover:text-blue-100 dark:hover:bg-white/5"
+            disabled={!mounted}
+          >
+            {mounted ? (
+              isDark ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )
+            ) : (
+              <div className="h-4 w-4" />
+            )}
+          </Button>
           
           {/* User info and auth buttons */}
           <div className="flex items-center gap-2">
