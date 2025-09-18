@@ -60,7 +60,7 @@ const FAQs = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-[#0b1220] dark:to-[#0b1220] py-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-50 dark:from-[#0b1220] dark:to-[#0b1220] py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
@@ -75,24 +75,24 @@ const FAQs = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* FAQ Section */}
           <div className="lg:col-span-2">
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <HelpCircle className="h-5 w-5 text-blue-600" />
+            <Card className="mb-8 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 border-blue-200/50 dark:border-blue-800/50">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-t-lg">
+                <CardTitle className="flex items-center gap-2 text-blue-900 dark:text-blue-100">
+                  <HelpCircle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   Common Questions
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-blue-700 dark:text-blue-300">
                   Browse through our most frequently asked questions
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
                 <Accordion type="single" collapsible className="w-full">
                   {faqData.map((faq, index) => (
-                    <AccordionItem key={index} value={`item-${index}`}>
-                      <AccordionTrigger className="text-left">
-                        {faq.question}
+                    <AccordionItem key={index} value={`item-${index}`} className="border-b border-blue-100 dark:border-blue-800/30 last:border-b-0">
+                      <AccordionTrigger className="text-left hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md px-3 py-2 transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300">
+                        <span className="font-medium">{faq.question}</span>
                       </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
+                      <AccordionContent className="text-muted-foreground px-3 py-2 bg-blue-50/50 dark:bg-blue-900/10 rounded-md mt-2 transition-all duration-200">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -104,28 +104,28 @@ const FAQs = () => {
 
           {/* Ask Question Section */}
           <div className="lg:col-span-1">
-            <Card className="sticky top-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MessageCircle className="h-5 w-5 text-blue-600" />
+            <Card className="sticky top-8 transition-all duration-300 hover:shadow-xl hover:shadow-green-500/10 hover:-translate-y-1 border-green-200/50 dark:border-green-800/50">
+              <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-t-lg">
+                <CardTitle className="flex items-center gap-2 text-green-900 dark:text-green-100">
+                  <MessageCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                   Ask a Question
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-green-700 dark:text-green-300">
                   Can't find what you're looking for? Ask us directly!
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-6">
                 {submitted ? (
-                  <Alert>
-                    <HelpCircle className="h-4 w-4" />
-                    <AlertDescription>
+                  <Alert className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20">
+                    <HelpCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                    <AlertDescription className="text-green-700 dark:text-green-300">
                       Thank you for your question! We'll get back to you within 24 hours.
                     </AlertDescription>
                   </Alert>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address</Label>
+                      <Label htmlFor="email" className="text-green-700 dark:text-green-300 font-medium">Email Address</Label>
                       <Input
                         id="email"
                         type="email"
@@ -133,10 +133,11 @@ const FAQs = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        className="border-green-200 focus:border-green-400 focus:ring-green-400/20 dark:border-green-800 dark:focus:border-green-600 dark:focus:ring-green-600/20 transition-colors duration-200"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="question">Your Question</Label>
+                      <Label htmlFor="question" className="text-green-700 dark:text-green-300 font-medium">Your Question</Label>
                       <Textarea
                         id="question"
                         placeholder="What would you like to know about JalRakshak?"
@@ -144,9 +145,10 @@ const FAQs = () => {
                         onChange={(e) => setQuestion(e.target.value)}
                         required
                         rows={4}
+                        className="border-green-200 focus:border-green-400 focus:ring-green-400/20 dark:border-green-800 dark:focus:border-green-600 dark:focus:ring-green-600/20 transition-colors duration-200"
                       />
                     </div>
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white transition-all duration-200 hover:shadow-lg hover:shadow-green-500/25 hover:-translate-y-0.5">
                       <Send className="h-4 w-4 mr-2" />
                       Send Question
                     </Button>
@@ -158,24 +160,27 @@ const FAQs = () => {
         </div>
 
         {/* Contact Information */}
-        <Card className="mt-8">
+        <Card className="mt-8 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10 hover:-translate-y-1 border-purple-200/50 dark:border-purple-800/50">
           <CardContent className="pt-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100 mb-4">
+              <h3 className="text-xl font-semibold text-purple-900 dark:text-purple-100 mb-4">
                 Still Need Help?
               </h3>
-              <p className="text-blue-700 dark:text-blue-300 mb-4">
+              <p className="text-purple-700 dark:text-purple-300 mb-6">
                 Contact our support team for personalized assistance
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <div className="text-sm">
-                  <strong>Email:</strong> support@jalrakshak.com
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <div className="text-sm bg-purple-50 dark:bg-purple-900/20 px-4 py-3 rounded-lg border border-purple-200 dark:border-purple-800/30 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors duration-200">
+                  <strong className="text-purple-800 dark:text-purple-200">Email:</strong> 
+                  <span className="text-purple-700 dark:text-purple-300 ml-1">support@jalrakshak.com</span>
                 </div>
-                <div className="text-sm">
-                  <strong>Phone:</strong> +91-9876543210
+                <div className="text-sm bg-purple-50 dark:bg-purple-900/20 px-4 py-3 rounded-lg border border-purple-200 dark:border-purple-800/30 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors duration-200">
+                  <strong className="text-purple-800 dark:text-purple-200">Phone:</strong> 
+                  <span className="text-purple-700 dark:text-purple-300 ml-1">+91-9876543210</span>
                 </div>
-                <div className="text-sm">
-                  <strong>Hours:</strong> Mon-Fri 9AM-6PM IST
+                <div className="text-sm bg-purple-50 dark:bg-purple-900/20 px-4 py-3 rounded-lg border border-purple-200 dark:border-purple-800/30 hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-colors duration-200">
+                  <strong className="text-purple-800 dark:text-purple-200">Hours:</strong> 
+                  <span className="text-purple-700 dark:text-purple-300 ml-1">Mon-Fri 9AM-6PM IST</span>
                 </div>
               </div>
             </div>
