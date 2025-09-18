@@ -119,8 +119,15 @@ function findStructure(q: string): StructureInfo | null {
 }
 
 export default function Structure() {
-  const [query, setQuery] = useState("RCC tank");
+  const [query, setQuery] = useState("");
+  const [showInfo, setShowInfo] = useState(false);
   const info = useMemo(() => findStructure(query), [query]);
+
+  const handleShowInfo = () => {
+    if (query.trim()) {
+      setShowInfo(true);
+    }
+  };
 
   return (
     <main className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -136,63 +143,89 @@ export default function Structure() {
         <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-100">
           <Layers className="h-5 w-5" /> Choose or type a structure
         </h2>
-        <form className="flex flex-col gap-3 sm:flex-row" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex flex-col gap-3 sm:flex-row" onSubmit={(e) => { e.preventDefault(); handleShowInfo(); }}>
           <input
             list="structures"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="h-10 flex-1 rounded-lg border border-black bg-white/40 px-3 text-sm text-black placeholder-black/50 outline-none ring-1 ring-black/20 backdrop-blur focus:border-black focus:ring-black/30 dark:border-white/10 dark:bg-white/10 dark:text-blue-100"
-            placeholder="e.g., RCC tank, Recharge pit, Rain barrel"
+            placeholder="Enter structure name (e.g., RCC tank, Recharge pit, Rain barrel)"
           />
           <datalist id="structures">
             {CATALOG.map((s) => (
               <option key={s.name} value={s.name} />
             ))}
           </datalist>
-          <Button className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-white hover:bg-blue-700">Show info</Button>
+          <Button 
+            type="submit"
+            className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-white hover:bg-blue-700"
+            disabled={!query.trim()}
+          >
+            Show Info
+          </Button>
         </form>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-          <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Overview</h3>
-          {info ? (
-            <p className="text-black/90 dark:text-blue-100/90">{info.description}</p>
-          ) : (
-            <p className="text-black/80 dark:text-blue-100/80">Type a structure name to view details.</p>
-          )}
-        </div>
-        <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-          <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Suitability</h3>
-          <ul className="list-disc pl-5 text-black/90 dark:text-blue-100/90">
-            {(info?.suitability ?? ["—"]).map((s) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ul>
-        </div>
-        <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-          <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-100">
-            <Ruler className="h-4 w-4" /> Typical dimensions
-          </h3>
-          <p className="text-black/90 dark:text-blue-100/90">{info?.typicalDims ?? "—"}</p>
-        </div>
-        <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-          <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-100">
-            <Wrench className="h-4 w-4" /> Materials & installation
-          </h3>
-          <p className="text-black/90 dark:text-blue-100/90">{info ? info.materials.join(", ") : "—"}</p>
-          <p className="mt-2 text-blue-900/90 dark:text-blue-100/90">Estimated cost: {info?.estCost ?? "—"}</p>
-          <p className="mt-1 text-xs text-blue-900/60 dark:text-blue-100/60">Costs vary by region and specifications.</p>
-        </div>
-        <div className={`md:col-span-2 p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-          <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Maintenance</h3>
-          <ul className="list-disc pl-5 text-black/90 dark:text-blue-100/90">
-            {(info?.maintenance ?? ["—"]).map((m) => (
-              <li key={m}>{m}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {showInfo ? (
+        <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Overview</h3>
+            {info ? (
+              <p className="text-black/90 dark:text-blue-100/90">{info.description}</p>
+            ) : (
+              <p className="text-red-600 dark:text-red-400">Structure not found. Please check the name and try again.</p>
+            )}
+          </div>
+          <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Suitability</h3>
+            <ul className="list-disc pl-5 text-black/90 dark:text-blue-100/90">
+              {(info?.suitability ?? ["—"]).map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          </div>
+          <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-100">
+              <Ruler className="h-4 w-4" /> Typical dimensions
+            </h3>
+            <p className="text-black/90 dark:text-blue-100/90">{info?.typicalDims ?? "—"}</p>
+          </div>
+          <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-100">
+              <Wrench className="h-4 w-4" /> Materials & installation
+            </h3>
+            <p className="text-black/90 dark:text-blue-100/90">{info ? info.materials.join(", ") : "—"}</p>
+            <p className="mt-2 text-blue-900/90 dark:text-blue-100/90">Estimated cost: {info?.estCost ?? "—"}</p>
+            <p className="mt-1 text-xs text-blue-900/60 dark:text-blue-100/60">Costs vary by region and specifications.</p>
+          </div>
+          <div className={`md:col-span-2 p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Maintenance</h3>
+            <ul className="list-disc pl-5 text-black/90 dark:text-blue-100/90">
+              {(info?.maintenance ?? ["—"]).map((m) => (
+                <li key={m}>{m}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : (
+        <section className={`p-8 ${glass} text-center`}>
+          <div className="flex flex-col items-center gap-4">
+            <Layers className="h-16 w-16 text-blue-400 dark:text-blue-500" />
+            <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100">Select a Structure</h3>
+            <p className="text-blue-700 dark:text-blue-300 max-w-md">
+              Enter a structure name above and click "Show Info" to view detailed information about rainwater harvesting structures.
+            </p>
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-blue-600 dark:text-blue-400">
+              <span>• RCC tank</span>
+              <span>• Recharge pit</span>
+              <span>• Rain barrel</span>
+              <span>• Recharge well</span>
+              <span>• Soak pit</span>
+              <span>• Filter chamber</span>
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

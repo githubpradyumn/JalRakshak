@@ -27,9 +27,12 @@ export default function Index() {
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-medium text-blue-800 shadow-sm ring-1 ring-white/50 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 dark:text-blue-200">
               Smart rainwater harvesting
             </div>
-            <h1 className="mt-5 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl group-hover:drop-shadow-[0_0_18px_rgba(59,130,246,0.55)]">
-              <Droplets className="h-9 w-9 text-blue-500/80 dark:text-blue-300/80" />
-              JalRakshak – Rainwater Harvesting Feasibility App
+            <h1 className="mt-5 flex flex-col items-center justify-center gap-3 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-6xl group-hover:drop-shadow-[0_0_18px_rgba(59,130,246,0.55)]">
+              <div className="flex items-center gap-3">
+                <Droplets className="h-9 w-9 text-blue-500/80 dark:text-blue-300/80" />
+                <span>JalRakshak</span>
+              </div>
+              <span className="text-2xl sm:text-3xl md:text-4xl font-semibold">Rainwater Harvesting Feasibility App</span>
             </h1>
             <p className="mt-4 text-lg font-semibold text-blue-900/90 dark:text-blue-200/90">
               Clean, minimal, and professional.
