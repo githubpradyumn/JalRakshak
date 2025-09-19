@@ -6,7 +6,7 @@ const glass = "rounded-2xl border border-black bg-white/20 shadow-xl ring-1 ring
 export default function About() {
   const developers = [
     {
-      name: "",
+      name: "Vivek Singh",
       role: "",
       expertise: "",
       experience: "",
@@ -14,7 +14,7 @@ export default function About() {
       description: ""
     },
     {
-      name: "",
+      name: "Kartik Gupta ",
       role: "",
       expertise: "",
       experience: "",
@@ -22,7 +22,7 @@ export default function About() {
       description: ""
     },
     {
-      name: "",
+      name: "Pradyumn Singh",
       role: "",
       expertise: "",
       experience: "",
@@ -30,7 +30,7 @@ export default function About() {
       description: ""
     },
     {
-      name: "",
+      name: "Sheetal Asthana",
       role: "",
       expertise: "",
       experience: "",
@@ -38,7 +38,7 @@ export default function About() {
       description: ""
     },
     {
-      name: "",
+      name: "Alka Singh",
       role: "",
       expertise: "",
       experience: "",
@@ -46,7 +46,7 @@ export default function About() {
       description: ""
     },
     {
-      name: "",
+      name: "Manisha Kumari",
       role: "",
       expertise: "",
       experience: "",
