@@ -6,61 +6,61 @@ const glass = "rounded-2xl border border-black bg-white/20 shadow-xl ring-1 ring
 export default function About() {
   const developers = [
     {
-      name: "Dr. Sarah Johnson",
-      role: "Lead Water Engineer",
-      expertise: "Hydrology & Water Management",
-      experience: "15+ years",
-      avatar: "👩‍🔬",
-      description: "Expert in sustainable water systems and community water management."
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
     },
     {
-      name: "Michael Chen",
-      role: "Full-Stack Developer",
-      expertise: "React, Node.js, Cloud Architecture",
-      experience: "8+ years",
-      avatar: "👨‍💻",
-      description: "Passionate about building scalable web applications for environmental causes."
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
     },
     {
-      name: "Dr. Priya Sharma",
-      role: "Climate Data Scientist",
-      expertise: "Meteorology & Data Analysis",
-      experience: "12+ years",
-      avatar: "👩‍💼",
-      description: "Specializes in weather pattern analysis and climate impact assessment."
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
     },
     {
-      name: "Alex Rodriguez",
-      role: "UI/UX Designer",
-      expertise: "User Experience & Design Systems",
-      experience: "6+ years",
-      avatar: "👨‍🎨",
-      description: "Creates intuitive interfaces that make complex data accessible to everyone."
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
     },
     {
-      name: "Dr. James Wilson",
-      role: "Environmental Consultant",
-      expertise: "Sustainability & Policy",
-      experience: "20+ years",
-      avatar: "👨‍🏫",
-      description: "Advises on environmental policies and sustainable development practices."
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
     },
     {
-      name: "Emma Thompson",
-      role: "Community Outreach Coordinator",
-      expertise: "Education & Community Engagement",
-      experience: "10+ years",
-      avatar: "👩‍🏫",
-      description: "Bridges the gap between technology and community needs through education."
-    }
+      name: "",
+      role: "",
+      expertise: "",
+      experience: "",
+      avatar: "",
+      description: ""
+    },
   ];
 
-  const projectStats = [
-    { icon: Users, label: "Communities Served", value: "500+", color: "text-blue-600" },
-    { icon: Droplets, label: "Water Saved (Liters)", value: "2.5M+", color: "text-cyan-600" },
-    { icon: Globe, label: "Countries", value: "15+", color: "text-green-600" },
-    { icon: Award, label: "Awards Won", value: "8", color: "text-purple-600" }
-  ];
+  // const projectStats = [
+  //   { icon: Users, label: "Communities Served", value: "500+", color: "text-blue-600" },
+  //   { icon: Droplets, label: "Water Saved (Liters)", value: "2.5M+", color: "text-cyan-600" },
+  //   { icon: Globe, label: "Countries", value: "15+", color: "text-green-600" },
+  //   { icon: Award, label: "Awards Won", value: "8", color: "text-purple-600" }
+  // ];
 
   return (
     <main className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -94,7 +94,7 @@ export default function About() {
               JalRakshak is a comprehensive water management platform that combines cutting-edge technology with environmental science to help communities make informed decisions about rainwater harvesting. Our mission is to democratize access to water conservation tools and create a sustainable future for generations to come.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {projectStats.map((stat, index) => (
                 <div key={index} className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                   <stat.icon className={`h-8 w-8 mx-auto mb-2 ${stat.color}`} />
@@ -102,7 +102,7 @@ export default function About() {
                   <div className="text-sm text-blue-700 dark:text-blue-300">{stat.label}</div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       </section>
