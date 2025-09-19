@@ -7,8 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Droplets, Eye, EyeOff } from "lucide-react";
+import { useI18n } from "@/i18n";
 
 const LoginPage = () => {
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -54,29 +56,29 @@ const LoginPage = () => {
               <span className="absolute inset-0 -z-10 blur-md rounded-full bg-blue-400/40 opacity-70" />
               <div className="flex items-center gap-2 text-3xl font-extrabold tracking-tight text-blue-700 dark:text-blue-300">
                 <Droplets className="h-8 w-8 text-blue-600 dark:text-blue-300" />
-                JalRakshak
+                {t("appName")}
               </div>
             </div>
           </div>
-          <p className="text-muted-foreground">Water Management & Analysis System</p>
+          <p className="text-muted-foreground">{t("waterManagementTagline")}</p>
         </div>
 
         {/* Login Card */}
         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm dark:bg-[#0b1220]/80">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
+            <CardTitle className="text-2xl text-center">{t("welcomeBack")}</CardTitle>
             <CardDescription className="text-center">
-              Sign in to your account to continue
+              {t("signInToContinue")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("email")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("enterEmail")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -85,12 +87,12 @@ const LoginPage = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("password")}</Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder={t("enterPassword")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
@@ -123,15 +125,15 @@ const LoginPage = () => {
                 className="w-full h-11"
                 disabled={isLoading}
               >
-                {isLoading ? "Signing in..." : "Sign In"}
+                {isLoading ? t("signingIn") : t("signIn")}
               </Button>
             </form>
 
             <div className="mt-6 text-center text-sm text-muted-foreground">
-              <p>Demo credentials:</p>
+              <p>{t("demoCredentials")}</p>
               <p className="font-mono text-xs mt-1">
-                Email: admin@jalrakshak.com<br />
-                Password: admin123
+                {t("email")}: admin@jalrakshak.com<br />
+                {t("password")}: admin123
               </p>
             </div>
           </CardContent>
@@ -139,7 +141,7 @@ const LoginPage = () => {
 
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 JalRakshak. All rights reserved.</p>
+          <p>&copy; 2024 {t("appName")}. {t("allRightsReserved")}</p>
         </div>
       </div>
     </div>

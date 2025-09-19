@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CloudRain, MapPin, Thermometer, Wind, Droplets, Sun, Calendar, BarChart3 } from "lucide-react";
+import { useI18n } from "@/i18n";
 
 const glass =
   "rounded-2xl border border-black bg-white/20 shadow-xl ring-1 ring-black/20 backdrop-blur-md dark:border-white/10 dark:bg-white/10 dark:ring-white/10";
@@ -25,6 +26,7 @@ type AnnualRainfallData = {
 };
 
 export default function Weather() {
+  const { t } = useI18n();
   const [query, setQuery] = useState("New Delhi, IN");
   const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
   const [loading, setLoading] = useState(false);
@@ -132,17 +134,17 @@ export default function Weather() {
       <header className="mb-6 flex items-center justify-between text-black dark:text-blue-100">
         <div className="flex items-center gap-2">
           <CloudRain className="h-6 w-6 text-blue-600 dark:text-blue-300" />
-          <span className="text-xl font-bold">Weather</span>
+          <span className="text-xl font-bold">{t("navWeather")}</span>
         </div>
-        <div className="text-xs text-blue-900/70 dark:text-blue-100/70">Check conditions and rain alerts</div>
+        <div className="text-xs text-blue-900/70 dark:text-blue-100/70">{t("weatherSubtitle")}</div>
       </header>
 
       <section className={`mb-6 p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20 text-black dark:text-blue-100`}>
         <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-100">
-          <MapPin className="h-5 w-5" /> Enter your location
+          <MapPin className="h-5 w-5" /> {t("enterLocation")}
         </h2>
         <p className="mb-4 text-sm text-blue-700 dark:text-blue-300">
-          Get comprehensive weather data including current conditions, rain alerts, and annual rainfall analysis
+          {t("weatherHelp")}
         </p>
         <form
           className="flex flex-col gap-3 sm:flex-row"
@@ -155,14 +157,14 @@ export default function Weather() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="h-10 flex-1 rounded-lg border border-black bg-white/40 px-3 text-sm text-black placeholder-black/50 outline-none ring-1 ring-black/20 backdrop-blur focus:border-black focus:ring-black/30 dark:border-white/10 dark:bg-white/10 dark:text-blue-100"
-            placeholder="Enter city, address, or location name"
+            placeholder={t("enterLocationPlaceholder")}
           />
           <Button 
             type="submit" 
             className="h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-white hover:bg-blue-700"
             disabled={loading}
           >
-            {loading ? "Loading..." : "Get All Weather Data"}
+            {loading ? t("loading") : t("getAllWeatherData")}
           </Button>
         </form>
       </section>
@@ -176,7 +178,7 @@ export default function Weather() {
           {/* Current Weather & Location */}
           <section className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Current conditions</h3>
+              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">{t("currentConditions")}</h3>
               <div className="mt-2 grid grid-cols-2 gap-4 text-black dark:text-blue-100">
                 <div className="flex items-center gap-2"><Thermometer className="h-4 w-4" /> {data.current?.temperature ?? 0}°C</div>
                 <div className="flex items-center gap-2"><Wind className="h-4 w-4" /> {data.current?.wind ?? 0} km/h</div>
@@ -185,17 +187,17 @@ export default function Weather() {
               </div>
             </div>
             <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Location</h3>
+              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">{t("location")}</h3>
               <p className="text-sm text-black/80 dark:text-blue-100/80">{data.locationName}</p>
               <p className="mt-2 text-xs text-blue-900/70 dark:text-blue-100/70">
                 {coords ? `${coords.lat.toFixed(4)}, ${coords.lon.toFixed(4)}` : "—"}
               </p>
             </div>
             <div className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
-              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Rain alert (24h)</h3>
+              <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">{t("rainAlert24h")}</h3>
               <p className="text-3xl font-extrabold text-black dark:text-blue-300">{data.sumNext24h.toFixed(1)} mm</p>
               <p className="mt-2 text-sm text-blue-900/80 dark:text-blue-100/80">
-                {rainExpected ? "🌧 Rain expected in next 24 hours." : "No significant rain expected in next 24 hours."}
+                {rainExpected ? t("rainExpected24h") : t("noRain24h")}
               </p>
             </div>
           </section>
@@ -204,7 +206,7 @@ export default function Weather() {
           {rainfallData.loading && (
             <div className={`p-6 ${glass} text-center`}>
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-2 text-sm text-blue-700 dark:text-blue-300">Fetching annual rainfall data...</p>
+              <p className="mt-2 text-sm text-blue-700 dark:text-blue-300">{t("fetchingAnnualRainfall")}</p>
             </div>
           )}
 
@@ -217,13 +219,13 @@ export default function Weather() {
           {rainfallData.annualRainfall && (
             <section className={`p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
               <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-blue-900 dark:text-blue-100">
-                <Calendar className="h-5 w-5" /> Annual Rainfall Analysis
+                <Calendar className="h-5 w-5" /> {t("annualRainfallAnalysis")}
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className={`p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20`}>
                   <h3 className="flex items-center gap-2 text-base font-semibold text-blue-900 dark:text-blue-100 mb-2">
-                    <BarChart3 className="h-4 w-4" /> Annual Total
+                    <BarChart3 className="h-4 w-4" /> {t("annualTotal")}
                   </h3>
                   <p className="text-3xl font-bold text-blue-700 dark:text-blue-300">
                     {rainfallData.annualRainfall} mm
@@ -235,13 +237,13 @@ export default function Weather() {
                 
                 <div className={`p-4 rounded-lg bg-green-50 dark:bg-green-900/20`}>
                   <h3 className="text-base font-semibold text-green-900 dark:text-green-100 mb-2">
-                    Water Harvesting Potential
+                    {t("waterHarvestingPotential")}
                   </h3>
                   <p className="text-lg text-green-700 dark:text-green-300">
                     {Math.round(rainfallData.annualRainfall * 0.8)} L/m²/year
                   </p>
                   <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-                    (80% runoff coefficient)
+                    ({t("runoffCoefficient80")})
                   </p>
                 </div>
               </div>
@@ -249,7 +251,7 @@ export default function Weather() {
               {rainfallData.monthlyData && (
                 <div>
                   <h3 className="text-base font-semibold text-blue-900 dark:text-blue-100 mb-4">
-                    Monthly Rainfall Distribution
+                    {t("monthlyRainfallDistribution")}
                   </h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
                     {rainfallData.monthlyData.map((month, index) => (
