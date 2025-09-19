@@ -6,6 +6,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
+import { LanguageProvider } from "./i18n";
 import { AuthProvider } from "./AuthContext";
 import LoginPage from "./LoginPage";
 import ProtectedRoute from "./ProtectedRoute";
@@ -23,11 +24,12 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AuthProvider>
-          <BrowserRouter>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <AuthProvider>
+            <BrowserRouter>
             <div className="min-h-screen bg-gradient-to-b from-blue-100 to-blue-50 dark:from-[#0b1220] dark:to-[#0b1220]">
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
@@ -88,9 +90,10 @@ const App = () => (
                 <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
-          </BrowserRouter>
-        </AuthProvider>
-      </TooltipProvider>
+            </BrowserRouter>
+          </AuthProvider>
+        </TooltipProvider>
+      </LanguageProvider>
     </ThemeProvider>
   </QueryClientProvider>
 );

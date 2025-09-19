@@ -5,6 +5,7 @@ import { Moon, Sun, LogOut, User, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "../AuthContext";
+import { useI18n } from "@/i18n";
 
 export const Navbar = () => {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -12,6 +13,7 @@ export const Navbar = () => {
   const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
   useEffect(() => setMounted(true), []);
+  const { t, lang, toggle } = useI18n();
 
   const isDark = (resolvedTheme ?? theme) === "dark";
 
@@ -37,17 +39,17 @@ export const Navbar = () => {
             <span className="absolute inset-0 -z-10 blur-md rounded-full bg-blue-400/40 opacity-70" />
             <a href="/" className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-blue-700 dark:text-blue-300">
               <img src="/logo.svg" alt="JalRakshak" className="h-7 w-7" />
-              JalRakshak
+              {t("appName")}
             </a>
           </div>
         </div>
         <div className="flex items-center gap-1 sm:gap-2">
-          <NavItem to="/">Home</NavItem>
-          <NavItem to="/analysis">Analysis</NavItem>
-          <NavItem to="/weather">Weather</NavItem>
-          <NavItem to="/structure">Structure</NavItem>
-          <NavItem to="/faqs">FAQs</NavItem>
-          <NavItem to="/about">About us</NavItem>
+          <NavItem to="/">{t("navHome")}</NavItem>
+          <NavItem to="/analysis">{t("navAnalysis")}</NavItem>
+          <NavItem to="/weather">{t("navWeather")}</NavItem>
+          <NavItem to="/structure">{t("navStructure")}</NavItem>
+          <NavItem to="/faqs">{t("navFaqs")}</NavItem>
+          <NavItem to="/about">{t("navAbout")}</NavItem>
           <div className="mx-2 h-6 w-px bg-blue-200 dark:bg-white/10" />
           
           {/* Theme toggle button */}
@@ -67,6 +69,16 @@ export const Navbar = () => {
             ) : (
               <div className="h-4 w-4" />
             )}
+          </Button>
+
+          {/* Language toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggle}
+            className="text-blue-700 hover:text-blue-900 hover:bg-blue-100/50 dark:text-blue-300 dark:hover:text-blue-100 dark:hover:bg-white/5"
+          >
+            {lang === "en" ? t("toggleToHindi") : t("toggleToEnglish")}
           </Button>
           
           {/* User info and auth buttons */}

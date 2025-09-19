@@ -2,10 +2,12 @@ import { RainBackground } from "@/components/RainBackground";
 import { ArrowRight, Droplets, CloudRain, Gauge, Users, Hammer, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
+import { useI18n } from "@/i18n";
 
 export default function Index() {
   const getStartedRef = useRef<HTMLDivElement>(null);
   const learnMoreRef = useRef<HTMLDivElement>(null);
+  const { t, toggle, lang } = useI18n();
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ 
@@ -25,33 +27,33 @@ export default function Index() {
         <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:py-32">
           <div className="[animation:slide-in_800ms_cubic-bezier(.2,.8,.2,1)_both] group">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-medium text-blue-800 shadow-sm ring-1 ring-white/50 backdrop-blur-sm dark:border-white/10 dark:bg-white/5 dark:text-blue-200">
-              Smart rainwater harvesting
+              {t("smartRainwaterHarvesting")}
             </div>
             <h1 className="mt-5 flex flex-col items-center justify-center gap-3 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl md:text-8xl group-hover:drop-shadow-[0_0_18px_rgba(59,130,246,0.55)]">
               <div className="flex items-center gap-3">
                 <Droplets className="h-9 w-9 text-blue-500/80 dark:text-blue-300/80" />
-                <span>JalRakshak</span>
+                <span>{t("appName")}</span>
               </div>
-              <span className=" mb-3 text-2xl sm:text-3xl md:text-6xl font-bold">Rainwater Harvesting Feasibility App</span>
+              <span className=" mb-3 text-2xl sm:text-3xl md:text-6xl font-bold">{t("subtitleApp")}</span>
             </h1>
             <p className="mt-4 text-lg font-semibold text-blue-900/90 dark:text-blue-200/90">
-              Clean, minimal, and professional.
+              {t("cleanMinimal")}
             </p>
             <p className="mt-3 mx-auto max-w-3xl text-base leading-relaxed text-blue-900/75 dark:text-blue-100/80 md:text-lg">
-              Get rain alerts and insights to assess rainwater harvesting potential in your area. Empowering communities to conserve groundwater through smart rainwater harvesting.
+              {t("heroDescription")}
             </p>
             <div className="mt-8 flex items-center justify-center gap-6 text-xs text-blue-800/70 dark:text-blue-200/70">
               <span className="relative pl-4">
                 <span className="absolute left-0 top-1.5 h-2 w-2 animate-pulse rounded-full bg-blue-500" />
-                Rain Alerts
+                {t("rainAlerts")}
               </span>
-              <span>Location insights</span>
-              <span>Community impact</span>
+              <span>{t("locationInsights")}</span>
+              <span>{t("communityImpact")}</span>
             </div>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Button asChild className=" bg-blue-600 text-white hover:bg-blue-700">
                 <a href="https://www.jalshakti-dowr.gov.in/" target="_blank">
-                  Government Policies
+                  {t("governmentPolicies")}
                   <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
                 </a>
               </Button>
@@ -59,27 +61,34 @@ export default function Index() {
                 onClick={() => scrollToSection(getStartedRef)}
                 className="group bg-blue-600 text-white hover:bg-blue-700"
               >
-                Get Started
+                {t("getStarted")}
                 <ArrowRight className="ml-2 inline transition-transform group-hover:translate-x-0.5" />
               </Button>
               <button
                 onClick={() => scrollToSection(learnMoreRef)}
                 className="rounded-md px-4 py-2 text-sm font-semibold text-blue-800 underline-offset-4 hover:underline dark:text-blue-200 transition-colors"
               >
-                Learn more
+                {t("learnMore")}
               </button>
+              <Button
+                variant="ghost"
+                onClick={toggle}
+                className="ml-2 text-blue-700 hover:text-blue-900 hover:bg-blue-100/50 dark:text-blue-300 dark:hover:text-blue-100 dark:hover:bg-white/5"
+              >
+                {lang === "en" ? t("toggleToHindi") : t("toggleToEnglish")}
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       <section ref={learnMoreRef} id="features" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24">
-        <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">Why JalRakshak</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">{t("whyJalRakshak")}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {[
-            { title: "Real-time weather", text: "Get hyperlocal rain alerts and rainfall intensity.", icon: CloudRain },
-            { title: "Feasibility insights", text: "Assess rooftop potential and storage estimates.", icon: Gauge },
-            { title: "Community impact", text: "Encourage sustainable water practices in your area.", icon: Users },
+            { title: t("featureWeatherTitle"), text: t("featureWeatherText"), icon: CloudRain },
+            { title: t("featureFeasTitle"), text: t("featureFeasText"), icon: Gauge },
+            { title: t("featureCommunityTitle"), text: t("featureCommunityText"), icon: Users },
           ].map((f, i) => (
             <div
               key={i}
@@ -100,13 +109,13 @@ export default function Index() {
       </section>
 
       <section ref={getStartedRef} id="get-started" className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center scroll-mt-24 mt-10">
-        <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">Get Started</h2>
+        <h2 className="mb-8 text-center text-2xl font-bold text-blue-900 dark:text-blue-100">{t("sectionGetStarted")}</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {[
-            { id: "analysis", title: "Analysis", href: "/analysis", desc: "Explore feasibility analysis for your location.", icon: Gauge },
-            { id: "weather", title: "Weather", href: "/weather", desc: "View current and upcoming rainfall insights.", icon: CloudRain },
-            { id: "structure", title: "Structure", href: "/structure", desc: "Get details for your harvesting structure.", icon: Hammer },
-            { id: "faqs", title: "FAQs", href: "/faqs", desc: "Find answers to common questions about JalRakshak.", icon: HelpCircle },
+            { id: "analysis", title: t("cardAnalysisTitle"), href: "/analysis", desc: t("cardAnalysisDesc"), icon: Gauge },
+            { id: "weather", title: t("cardWeatherTitle"), href: "/weather", desc: t("cardWeatherDesc"), icon: CloudRain },
+            { id: "structure", title: t("cardStructureTitle"), href: "/structure", desc: t("cardStructureDesc"), icon: Hammer },
+            { id: "faqs", title: t("cardFaqsTitle"), href: "/faqs", desc: t("cardFaqsDesc"), icon: HelpCircle },
           ].map((f) => (
             <a
               key={f.id}
@@ -121,7 +130,7 @@ export default function Index() {
               <h3 className="text-xl font-semibold text-blue-900 dark:text-blue-100">{f.title}</h3>
               <p className="mt-2 text-sm text-blue-900/70 dark:text-blue-100/70">{f.desc}</p>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition group-hover:translate-x-0.5 dark:text-blue-300">
-                Open {f.title} <ArrowRight className="h-4 w-4" />
+                {t("open")} {f.title} <ArrowRight className="h-4 w-4" />
               </span>
             </a>
           ))}
