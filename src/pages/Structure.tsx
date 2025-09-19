@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Hammer, Droplets, Ruler, Layers, Wrench } from "lucide-react";
+import { Hammer, Droplets, Ruler, Layers, Wrench, ExternalLink } from "lucide-react";
 
 const glass =
   "rounded-2xl border border-black bg-white/20 shadow-xl ring-1 ring-black/20 backdrop-blur-md dark:border-white/10 dark:bg-white/10 dark:ring-white/10";
@@ -122,12 +122,42 @@ export default function Structure() {
   const [query, setQuery] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const info = useMemo(() => findStructure(query), [query]);
+  const [linksLoading, setLinksLoading] = useState(false);
+  const [linksError, setLinksError] = useState<string | null>(null);
+  const [links, setLinks] = useState<Array<{ title: string; url: string; snippet: string }>>([]);
 
   const handleShowInfo = () => {
     if (query.trim()) {
       setShowInfo(true);
+      fetchRelatedLinks(query.trim());
     }
   };
+
+  async function fetchRelatedLinks(term: string) {
+    try {
+      setLinksLoading(true);
+      setLinksError(null);
+      setLinks([]);
+      // Wikipedia search API
+      const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(
+        term
+      )}&format=json&origin=*`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch links");
+      const data = await res.json();
+      const results: Array<{ title: string; pageid: number; snippet: string }> = data?.query?.search ?? [];
+      const mapped = results.slice(0, 5).map((r) => ({
+        title: r.title,
+        url: `https://en.wikipedia.org/?curid=${r.pageid}`,
+        snippet: r.snippet?.replace(/<[^>]+>/g, "") ?? "",
+      }));
+      setLinks(mapped);
+    } catch (e: any) {
+      setLinksError(e?.message || "Could not load links");
+    } finally {
+      setLinksLoading(false);
+    }
+  }
 
   return (
     <main className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -203,6 +233,41 @@ export default function Structure() {
             <ul className="list-disc pl-5 text-black/90 dark:text-blue-100/90">
               {(info?.maintenance ?? ["—"]).map((m) => (
                 <li key={m}>{m}</li>
+              ))}
+            </ul>
+          </div>
+          <div className={`md:col-span-2 p-6 ${glass} transition hover:-translate-y-1 hover:shadow-2xl hover:ring-blue-300/40 hover:shadow-blue-500/20`}>
+            <h3 className="mb-2 text-base font-semibold text-black dark:text-blue-100">Related resources</h3>
+            <p className="text-sm text-black/70 dark:text-blue-100/70 mb-3">
+              We searched Wikipedia for "{query}". Here are some helpful links:
+            </p>
+            {linksLoading && (
+              <p className="text-sm text-blue-700 dark:text-blue-300">Searching resources…</p>
+            )}
+            {linksError && (
+              <p className="text-sm text-red-600 dark:text-red-400">{linksError}</p>
+            )}
+            {!linksLoading && !linksError && links.length === 0 && (
+              <p className="text-sm text-black/70 dark:text-blue-100/70">No related links found.</p>
+            )}
+            <ul className="space-y-3">
+              {links.map((l) => (
+                <li key={l.url} className="group">
+                  <a
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-200"
+                  >
+                    <ExternalLink className="h-4 w-4 mt-0.5 opacity-70 group-hover:opacity-100" />
+                    <span>
+                      <span className="font-medium">{l.title}</span>
+                      {l.snippet && (
+                        <span className="block text-xs text-black/70 dark:text-blue-100/70 mt-0.5">{l.snippet}</span>
+                      )}
+                    </span>
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

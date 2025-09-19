@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Moon, Sun, LogOut, User, LogIn } from "lucide-react";
+import { Moon, Sun, Droplets, LogOut, User, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "../AuthContext";
@@ -36,7 +36,7 @@ export const Navbar = () => {
             
             <span className="absolute inset-0 -z-10 blur-md rounded-full bg-blue-400/40 opacity-70" />
             <a href="/" className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-blue-700 dark:text-blue-300">
-              <img src="/logo.svg" alt="JalRakshak" className="h-7 w-7" />
+              <Droplets className="h-6 w-6 text-blue-600 dark:text-blue-300" />
               JalRakshak
             </a>
           </div>
